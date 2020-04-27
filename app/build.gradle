@@ -19,6 +19,11 @@ android {
         }
     }
 
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -36,7 +41,7 @@ dependencies {
 
     //third libs
 
-    //for recycler view, binding and adapters and web requisitions
+    //for recycler view, binding, adapters and web requisitions
     implementation 'com.xwray:groupie:2.1.0'
 
 }
