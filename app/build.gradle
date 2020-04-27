@@ -36,7 +36,7 @@ dependencies {
 
     //third libs
 
-    //for recycler view, binding and adapters
+    //for recycler view, binding and adapters and web requisitions
     implementation 'com.xwray:groupie:2.1.0'
 
 }
