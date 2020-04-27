@@ -1,12 +1,9 @@
 package com.joaquim.chucknorrisio;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
-
-
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,24 +11,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.AppBarLayout;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
+import android.widget.Toast;
 
 import com.joaquim.chucknorrisio.model.CategoryItem;
+import com.joaquim.chucknorrisio.presentation.CategoryPresenter;
 import com.xwray.groupie.GroupAdapter;
 
-import java.security.acl.Group;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private GroupAdapter adapter;
+    private CategoryPresenter presenter;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -59,24 +56,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter = new GroupAdapter();
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        populateItems();
+
+        presenter = new CategoryPresenter(this);
+        presenter.requestAll();
+
     }
 
-    //fake data to check if layout is working property
-    private void populateItems() {
-        List<CategoryItem> items = new ArrayList<>();
+    public void showProgressBar() {
+        if (progress == null) {
+            progress = new ProgressDialog(this);
+            progress.setMessage(getString(R.string.loading));
+            progress.setIndeterminate(true);
+            progress.setCancelable(false);
+        }
+        progress.show();
+    }
 
-        items.add(new CategoryItem("Cat1", 0xFF00FFFF));
-        items.add(new CategoryItem("Cat2", 0x0F00FFFF));
-        items.add(new CategoryItem("Cat3", 0xFFF0FFFF));
-        items.add(new CategoryItem("Cat4", 0xFF000FFF));
-        items.add(new CategoryItem("Cat5", 0xFF00FF0F));
-        items.add(new CategoryItem("Cat6", 0xFF00FFF0));
+    public void hideProgressBar() {
+        if (progress != null) {
+            progress.hide();
+        }
+    }
 
-        adapter.addAll(items);
+    //if the request is ok from presenter, populate all data
+    public void showCategories(List<CategoryItem> categoryItems) {
+        adapter.addAll(categoryItems);
         adapter.notifyDataSetChanged();
-
     }
+
+    public void showFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public void onBackPressed() {
