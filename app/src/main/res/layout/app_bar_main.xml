@@ -12,8 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_scrollFlags="scroll|enterAlways"
-        />
+        app:layout_scrollFlags="scroll|enterAlways" />
 
 <!--    <android.support.design.widget.FloatingActionButton-->
 <!--        android:id="@+id/fab"-->
@@ -23,8 +22,6 @@
 <!--        android:layout_margin="@dimen/fab_margin"-->
 <!--        app:srcCompat="@android:drawable/ic_menu_zoom" />-->
 
-    <include
-        layout="@layout/content_main"
-        android:layout_height="547dp" />
+    <include layout="@layout/content_main" />
 
 </android.support.design.widget.CoordinatorLayout>
