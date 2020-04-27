@@ -1,6 +1,7 @@
 package com.joaquim.chucknorrisio;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.joaquim.chucknorrisio.datasource.CategoryRemoteDataSource;
 import com.joaquim.chucknorrisio.model.CategoryItem;
 import com.joaquim.chucknorrisio.presentation.CategoryPresenter;
 import com.xwray.groupie.GroupAdapter;
@@ -54,10 +56,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         RecyclerView rv = findViewById(R.id.rv_main);
         adapter = new GroupAdapter();
+        adapter.setOnItemClickListener((item, view)-> {
+            Intent intent = new Intent(MainActivity.this, JokerActivity.class);
+            CategoryItem categoryItem = (CategoryItem) item;
+
+            //give extras infos to next activity
+            intent.putExtra(JokerActivity.CATEGORY_KEY, categoryItem.getCategoryName());
+
+
+            startActivity(intent);
+        });
+
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
-        presenter = new CategoryPresenter(this);
+        CategoryRemoteDataSource dataSource = new CategoryRemoteDataSource();
+        presenter = new CategoryPresenter(this, dataSource);
         presenter.requestAll();
 
     }

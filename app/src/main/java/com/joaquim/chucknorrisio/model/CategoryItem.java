@@ -1,7 +1,6 @@
 package com.joaquim.chucknorrisio.model;
 
 import android.support.annotation.NonNull;
-import android.view.View;
 import android.widget.TextView;
 
 import com.joaquim.chucknorrisio.R;
@@ -26,6 +25,10 @@ public class CategoryItem extends Item<ViewHolder> {
         txtCategory.setText(categoryName);
         viewHolder.itemView.setBackgroundColor(bgColor);
 
+    }
+
+    public String getCategoryName() {
+        return categoryName;
     }
 
     @Override
