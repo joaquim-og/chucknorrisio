@@ -47,7 +47,7 @@ public class CategoryRemoteDataSource {
 
             HttpsURLConnection urlConnection;
             try {
-                URL url = new URL(endpoint.GET_CATEGORIES);
+                URL url = new URL(Endpoint.GET_CATEGORIES);
                 urlConnection = (HttpsURLConnection) url.openConnection();
                 urlConnection.setReadTimeout(2000);
                 urlConnection.setConnectTimeout(2000);
