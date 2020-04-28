@@ -14,6 +14,10 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class JokeRemoteDataSource {
 
     public interface JokeCallBack {
@@ -26,7 +30,26 @@ public class JokeRemoteDataSource {
     }
 
     public void findJokeBy(JokeCallBack callback, String category) {
-        new JokeTask(callback, category).execute();
+
+        HTTPClient.retrofit().create(ChuckNorrisAPI.class)
+                .findRandomBy(category)
+                .enqueue(new Callback<Joke>() {
+                    @Override
+                    public void onResponse(Call<Joke> call, Response<Joke> response) {
+                        if (response.isSuccessful()) {
+                            callback.onSuccess(response.body());
+                            callback.onComplete();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Joke> call, Throwable t) {
+                        callback.onError(t.getMessage());
+                        callback.onComplete();
+                    }
+                });
+
+//        new JokeTask(callback, category).execute();
     }
 
     private static class JokeTask extends AsyncTask<Void, Void, Joke> {
