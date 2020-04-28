@@ -46,4 +46,7 @@ dependencies {
     //for recycler view, binding, adapters and web requisitions
     implementation 'com.xwray:groupie:2.1.0'
 
+    //for getting img url and fetch into imageView
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

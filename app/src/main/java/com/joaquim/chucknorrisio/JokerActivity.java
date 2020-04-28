@@ -6,12 +6,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.joaquim.chucknorrisio.datasource.JokeRemoteDataSource;
 import com.joaquim.chucknorrisio.model.Joke;
 import com.joaquim.chucknorrisio.presentation.JokerPresenter;
+import com.squareup.picasso.Picasso;
 
 public class JokerActivity extends AppCompatActivity {
 
@@ -63,6 +65,10 @@ public class JokerActivity extends AppCompatActivity {
 
         TextView txtJoke = findViewById(R.id.txt_joke);
         txtJoke.setText(joke.getValue());
+
+        ImageView jokeImg = findViewById(R.id.img_icon);
+        Picasso.get().load(joke.getIconUrl()).into(jokeImg);
+
     }
 
     public void showFailure(String message) {
